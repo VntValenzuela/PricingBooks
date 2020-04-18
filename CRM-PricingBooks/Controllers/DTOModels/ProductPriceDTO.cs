@@ -7,5 +7,11 @@ namespace CRM_PricingBooks.Controllers.DTOModels
 {
     public class ProductPriceDTO
     {
+        public string ProductCode { get; set; }
+
+        public double FixedPrice { get; set; }
+
+        public double PromotionPrice { get; set; }
+
     }
 }
