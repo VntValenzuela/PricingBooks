@@ -25,7 +25,7 @@ namespace CRM_PricingBooks.Controllers
         public void Put(string ProductCode, [FromBody] string value)
         {
         }
-
+        
         [HttpDelete]
         public void Delete ()
         {
