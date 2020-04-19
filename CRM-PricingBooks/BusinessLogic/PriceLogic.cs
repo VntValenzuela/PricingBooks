@@ -10,9 +10,9 @@ namespace CRM_PricingBooks.BusinessLogic
 {
     public class PriceLogic : IPriceLogic
     {
-        private readonly IPricingBookDB _productTableDB;
+        private readonly IProductTableDB _productTableDB;
 
-        public PriceLogic(IPricingBookDB productTableDB)
+        public PriceLogic(IProductTableDB productTableDB)
         {
             _productTableDB = productTableDB;
         }
@@ -22,35 +22,11 @@ namespace CRM_PricingBooks.BusinessLogic
         public List<PriceDTO> GetPriceProducts()
         {
             // Retrieve all Products from database
-            List<PricingBook> allProducts = _productTableDB.GetAll();
+            List<Product> allProducts = _productTableDB.GetAll();
 
             List<PriceDTO> priceLists = GetPrice();
 
         }
-        public List<GroupPricesListDTO> GetGroupPrices() {
-
-            List<ProductPrice> allProducts = _productTableDB.GetAll();
-            List<GroupPricesListDTO> pricesLists = GetEmptyGroups();
-
-            foreach (PricingBook price in allProducts) {
-
-                assignPriceList(price,allProducts);
-            }
-            return pricesLists;
-        }
-
-        //Empty Lists from "Prices List"
-        private List<GroupPricesDTO> GetEmptyGroups() {
-
-            List<GroupPricesDTO> emptyPricelists = new List<GroupPricesDTO>()
-            {
-                new GroupPricesDTO() {GroupName="Price List 2019", Description="Basketball and Soccer Balls",  Products=new List<ProductDTO>()},
-                new GroupPricesDTO() {GroupName="Price List 2018", Description="Thriller Books",  Products=new List<ProductDTO>()},
-            };
-            return emptyPricelists;
-
-        }
-
 
         private List<PriceDTO> GetPrice() //Creating empty prices lists.
         {
@@ -62,31 +38,24 @@ namespace CRM_PricingBooks.BusinessLogic
             return emptyPricelists;
         }
 
-
-        private void assignPriceList(ProductPrice priceproduct, List<GroupPricesDTO> groupstoAssign) {
-
-            groupToAssignProductPrice.Add(new GroupPricesDTO() { ProductCode = priceproduct.ProductCode, FixedPrice =priceproduct.FixedPrice });
-
-        }
-
         private void calculatediscount(String activeCampaign, Product product ) //Calculating discounts
         {
-                  if(activeCampaign == "XMAS")
-                  {
-                    product.PromotionPrice= (product.Price)-(product.Price)*(0.05);
-                  }
-                  if(activeCampaign == "SUMMER")
-                  {
-                    product.PromotionPrice= (product.Price)-(product.Price)*(0.20);
-                  }
-                  if(activeCampaign == "BFRIDAY")
-                  {
-                    product.PromotionPrice= (product.Price)-(product.Price)*(0.25);
-                  }
-                  else
-                  {
-                    product.PromotionPrice = product.Price;
-                  }
+          if(activeCampaign == "XMAS")
+          {
+            product.PromotionPrice= (product.Price)-(product.Price)*(0.05);
+          }
+          if(activeCampaign == "SUMMER")
+          {
+            product.PromotionPrice= (product.Price)-(product.Price)*(0.20);
+          }
+          if(activeCampaign == "BFRIDAY")
+          {
+            product.PromotionPrice= (product.Price)-(product.Price)*(0.25);
+          }
+          else
+          {
+            product.PromotionPrice = product.Price;
+          }
 
         }
 

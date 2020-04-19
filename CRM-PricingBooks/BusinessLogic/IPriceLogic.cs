@@ -10,7 +10,5 @@ namespace CRM_PricingBooks.BusinessLogic
     public interface IPriceLogic
     {
         public List<PriceDTO> GetPriceProducts();
-        public List<GroupPricesListDTO> GetGroupPrices();
-
     }
 }
